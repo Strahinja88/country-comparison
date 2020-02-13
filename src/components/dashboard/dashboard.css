@@ -43,3 +43,56 @@
 .country-chart {
   border: 1px solid black;
 }
+
+.square {
+  width: 18px;
+  height: 18px;
+  margin-top: 4px;
+}
+
+.country-chart ul li:nth-child(1) .square {
+  background-color: darkgreen;
+}
+
+.country-chart ul li:nth-child(2) .square {
+  background-color: green;
+}
+
+.country-chart ul li:nth-child(3) .square {
+  background-color: lightgreen;
+}
+
+.country-chart ul li:nth-child(4) .square {
+  background-color: greenyellow;
+}
+
+.country-chart ul li p {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.scale {
+  border-right: 1px solid black;
+}
+
+.chart-item {
+  /* width: 150px; */
+  height: 100px;
+  margin-left: 10px;
+}
+
+.chart ul li:nth-child(1) .chart-item {
+  background-color: darkgreen;
+}
+
+.chart ul li:nth-child(2) .chart-item {
+  background-color: green;
+}
+
+.chart ul li:nth-child(3) .chart-item {
+  background-color: lightgreen;
+}
+
+.chart ul li:nth-child(4) .chart-item {
+  background-color: greenyellow;
+}
