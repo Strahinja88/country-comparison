@@ -100,7 +100,7 @@ class Dashboard extends Component {
         compareError: "",
         searched: "",
         checkboxes: [],
-        selectedCountries: checkboxes
+        selectedCountries: checkboxes.sort((a, b) => (a.name > b.name ? 1 : -1))
       });
     } else {
       this.setState({
@@ -110,17 +110,26 @@ class Dashboard extends Component {
   };
 
   populationPercentage = country => {
-    const { selectedCountries } = this.state;
+    const { selectedCountries, mostPopulated } = this.state;
     let sum = 0;
     let allPopulation = 0;
     selectedCountries.map(c => {
       allPopulation = sum += c.population;
     });
 
-    console.log(allPopulation);
-    const populationPercentage = (country.population / allPopulation) * 100;
+    const populationPercentage = Math.round(
+      (country.population / allPopulation) * 100
+    );
 
-    return Math.round(populationPercentage);
+    const populationPercentage2 = Math.round(
+      (country.population / mostPopulated.population) * 100
+    );
+
+    const height = `${(country.population / 40000000) * 400}px`;
+
+    const obj = { populationPercentage, height, populationPercentage2 };
+
+    return obj;
   };
 
   filtered = value => x =>
@@ -149,10 +158,6 @@ class Dashboard extends Component {
 
     console.log(this.state);
 
-    const sortedSelectedCountries = selectedCountries.sort((a, b) =>
-      a.name > b.name ? 1 : -1
-    );
-
     return (
       <div>
         <div className="dashboard">
@@ -180,10 +185,10 @@ class Dashboard extends Component {
                 />
               </div>
               <div className="row">
-                <div className="col-12 mt-5 country-chart">
+                <div className="col-12 mt-5 pb-3 country-chart">
                   <ul className="d-flex justify-content-around p-5 ml-5">
                     {selected
-                      ? sortedSelectedCountries.map(country => (
+                      ? selectedCountries.map(country => (
                           <li key={country.name} className="d-flex">
                             <div className="square"></div>
                             <p className="text-muted">{country.name}</p>
@@ -192,27 +197,82 @@ class Dashboard extends Component {
                       : null}
                   </ul>
                   <div className="row">
-                    <div className="col-md-2 scale">Chart</div>
-                    <div className="col-md-10 chart">
-                      <ul className="d-flex bd-highlight">
+                    <div className="col-2 d-flex flex-column justify-content-end">
+                      <div className="scale">
+                        <ul>
+                          <li>
+                            <span>40,000,000&#x2012;</span>{" "}
+                          </li>
+                          <li>
+                            <span>35,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>30,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>25,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>20,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>15,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>10,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>5,000,000&#x2012;</span>
+                          </li>
+                          <li>
+                            <span>0&#x2012;</span>{" "}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="col-10 d-flex flex-column justify-content-end chart">
+                      <div className="d-flex bd-highlight chart-wrapper">
                         {selected
-                          ? sortedSelectedCountries.map(country => (
-                              <li
-                                className="flex-fill bd-highlight"
+                          ? selectedCountries.map(country => (
+                              <div
+                                className="d-flex flex-fill bd-highlight flex-column justify-content-end chart-item-wrapper"
                                 key={country.name}
                               >
                                 <div
                                   key={country.name}
-                                  className="chart-item text-center"
+                                  className="chart-item"
+                                  style={{
+                                    height: this.populationPercentage(country)
+                                      .height
+                                  }}
                                 >
-                                  <p className="p-2 text-white">
-                                    {this.populationPercentage(country)}%
-                                  </p>
+                                  <div
+                                    className="percentage-wrapper"
+                                    style={
+                                      this.populationPercentage(country)
+                                        .populationPercentage2 > 5
+                                        ? { color: "white" }
+                                        : {
+                                            bottom: this.populationPercentage(
+                                              country
+                                            ).height,
+                                            color: "#6c757d"
+                                          }
+                                    }
+                                  >
+                                    <span className="percentage">
+                                      {
+                                        this.populationPercentage(country)
+                                          .populationPercentage
+                                      }
+                                      %
+                                    </span>
+                                  </div>
                                 </div>
-                              </li>
+                              </div>
                             ))
                           : null}
-                      </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
