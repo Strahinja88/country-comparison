@@ -18,7 +18,8 @@ class Dashboard extends Component {
       difference: "",
       selected: false,
       compareError: "",
-      selectedCountries: []
+      selectedCountries: [],
+      roundedNumber: null
     };
   }
 
@@ -109,6 +110,19 @@ class Dashboard extends Component {
     }
   };
 
+  roundNumberCalc = () => {
+    const { mostPopulated } = this.state;
+
+    let string = mostPopulated.population.toString();
+
+    const roundedNumber = parseInt(
+      string.substring(0, 1) +
+        string.substring(1, string.length).replace(/[0-9]/g, "0")
+    );
+
+    return roundedNumber;
+  };
+
   populationPercentage = country => {
     const { selectedCountries, mostPopulated } = this.state;
     let sum = 0;
@@ -125,11 +139,29 @@ class Dashboard extends Component {
       (country.population / mostPopulated.population) * 100
     );
 
-    const height = `${(country.population / 40000000) * 400}px`;
+    const roundedNumber = this.roundNumberCalc();
+
+    const height = `${(country.population / roundedNumber) * 500}px`;
 
     const obj = { populationPercentage, height, populationPercentage2 };
 
     return obj;
+  };
+
+  scaleCalc = () => {
+    const roundedNumber = this.roundNumberCalc();
+
+    const iterator = roundedNumber / 10;
+
+    let arr = [];
+
+    for (let i = roundedNumber; i >= 0; i -= iterator) {
+      arr.push(i);
+    }
+
+    // console.log(roundedNumber);
+    // console.log(arr);
+    return arr;
   };
 
   filtered = value => x =>
@@ -200,8 +232,20 @@ class Dashboard extends Component {
                     <div className="col-2 d-flex flex-column justify-content-end">
                       <div className="scale">
                         <ul>
-                          <li>
-                            <span>40,000,000&#x2012;</span>{" "}
+                          {selected
+                            ? this.scaleCalc().map((n, index) => (
+                                <li key={index}>
+                                  <span>
+                                    {n
+                                      .toString()
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                    &#x2012;
+                                  </span>
+                                </li>
+                              ))
+                            : null}
+                          {/* <li>
+                            <span>40,000,000&#x2012;</span>
                           </li>
                           <li>
                             <span>35,000,000&#x2012;</span>
@@ -226,7 +270,7 @@ class Dashboard extends Component {
                           </li>
                           <li>
                             <span>0&#x2012;</span>{" "}
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </div>
