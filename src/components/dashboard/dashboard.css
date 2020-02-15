@@ -77,7 +77,6 @@
 }
 
 .chart-item-wrapper {
-  /* height: 400px; */
   margin-left: 10px;
   position: relative;
 }
@@ -120,4 +119,62 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* Max width 992px */
+@media only screen and (max-width: 992px) {
+  .country-chart ul {
+    padding-top: 10px;
+  }
+
+  .square {
+    width: 16px;
+    height: 16px;
+  }
+
+  .country-chart ul li p {
+    font-size: 16px;
+  }
+
+  .chart {
+    padding-right: 10px;
+  }
+
+  .scale-wrapper {
+    padding: 0;
+  }
+
+  .scale ul {
+    padding-top: 0;
+  }
+
+  .scale ul li {
+    font-size: 14px;
+  }
+
+  .scale ul li span {
+    bottom: -8px;
+  }
+}
+
+/* Max width 768px */
+@media only screen and (max-width: 768px) {
+  .info-wrapper {
+    padding-bottom: 30px;
+  }
+
+  .square {
+    width: 14px;
+    height: 14px;
+  }
+
+  .country-chart ul li p {
+    font-size: 14px;
+    padding-left: 5px;
+  }
+
+  .chart {
+    padding-right: 10px;
+    padding-left: 0;
+  }
 }

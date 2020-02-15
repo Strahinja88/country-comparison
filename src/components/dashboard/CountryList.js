@@ -14,7 +14,7 @@ export default function CountryList({
   onSearch
 }) {
   return (
-    <div className="col-md-5 p-3 list">
+    <div className="col-md-5 pt-3 list">
       <h4 className="text-center pb-2">
         <strong>Country List</strong>
       </h4>

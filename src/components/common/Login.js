@@ -14,10 +14,6 @@ class Login extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.state.user);
-  }
-
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -34,9 +30,13 @@ class Login extends Component {
 
     const { username, password, user } = this.state;
 
-    if (username !== user.username) {
+    if (username !== user.username && username !== "") {
       this.setState({
         usernameError: "Invalid username"
+      });
+    } else if (username === "") {
+      this.setState({
+        usernameError: "Username field should not be empty"
       });
     } else {
       this.setState({
@@ -44,13 +44,17 @@ class Login extends Component {
       });
     }
 
-    if (password !== user.password) {
+    if (password !== user.password && password !== "") {
       this.setState({
         passwordError: "Invalid password"
       });
+    } else if (password === "") {
+      this.setState({
+        passwordError: "Password field should not be empty"
+      });
     } else {
       this.setState({
-        usernameError: ""
+        passwordError: ""
       });
     }
 

@@ -5,6 +5,7 @@ import "./dashboard.css";
 
 import CountryComparasion from "./CountryComparasion";
 import CountryList from "./CountryList";
+import CountryChart from "./CountryChart";
 
 class Dashboard extends Component {
   constructor() {
@@ -26,13 +27,10 @@ class Dashboard extends Component {
     // Set countries
     axios.get("https://restcountries.eu/rest/v2/all").then(res => {
       let countries = [];
-      res.data.map(item => {
-        countries.push(item);
-      });
+      res.data.map(item => countries.push(item));
       this.setState({
         countries
       });
-      console.log(this.state.countries);
     });
   }
 
@@ -117,7 +115,10 @@ class Dashboard extends Component {
     let firstNumber = parseInt(string.substring(0, 1));
     const secondNumber = parseInt(string.substring(1, 2));
 
-    if (secondNumber >= 5) {
+    if (
+      secondNumber >= 5 ||
+      ((firstNumber === 1 || firstNumber === 2) && secondNumber >= 2)
+    ) {
       firstNumber += 1;
     }
 
@@ -190,9 +191,7 @@ class Dashboard extends Component {
     const { selectedCountries, mostPopulated } = this.state;
     let sum = 0;
     let allPopulation = 0;
-    selectedCountries.map(c => {
-      allPopulation = sum += c.population;
-    });
+    selectedCountries.map(c => (allPopulation = sum += c.population));
 
     const populationPercentage = Math.round(
       (country.population / allPopulation) * 100
@@ -217,8 +216,6 @@ class Dashboard extends Component {
     const roundedNumber = this.roundNumberCalc();
 
     const devider = this.deviderCalc();
-
-    console.log(devider);
 
     const iterator = roundedNumber / devider;
 
@@ -254,8 +251,6 @@ class Dashboard extends Component {
       isDisabled = false;
     }
 
-    console.log(this.state);
-
     return (
       <div>
         <div className="dashboard">
@@ -282,85 +277,14 @@ class Dashboard extends Component {
                   onSearch={this.onSearch}
                 />
               </div>
+
               <div className="row">
-                <div className="col-12 mt-5 pb-3 country-chart">
-                  <ul className="d-flex justify-content-around p-5 ml-5">
-                    {selected ? (
-                      selectedCountries.map(country => (
-                        <li key={country.name} className="d-flex">
-                          <div className="square"></div>
-                          <p className="text-muted">{country.name}</p>
-                        </li>
-                      ))
-                    ) : (
-                      <strong>You have not selected countries yet.</strong>
-                    )}
-                  </ul>
-                  <div className="row">
-                    <div className="col-2 d-flex flex-column justify-content-end">
-                      <div className="scale">
-                        <ul>
-                          {selected
-                            ? this.scaleCalc().map((n, index) => (
-                                <li key={index}>
-                                  <span>
-                                    {n
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                    &#x2012;
-                                  </span>
-                                </li>
-                              ))
-                            : null}
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="col-10 d-flex flex-column justify-content-end chart">
-                      <div className="d-flex bd-highlight chart-wrapper">
-                        {selected
-                          ? selectedCountries.map(country => (
-                              <div
-                                className="d-flex flex-fill bd-highlight flex-column justify-content-end chart-item-wrapper"
-                                key={country.name}
-                              >
-                                <div
-                                  key={country.name}
-                                  className="chart-item"
-                                  style={{
-                                    height: this.populationPercentage(country)
-                                      .height
-                                  }}
-                                >
-                                  <div
-                                    className="percentage-wrapper"
-                                    style={
-                                      this.populationPercentage(country)
-                                        .populationPercentage2 > 5
-                                        ? { color: "white" }
-                                        : {
-                                            bottom: this.populationPercentage(
-                                              country
-                                            ).height,
-                                            color: "#6c757d"
-                                          }
-                                    }
-                                  >
-                                    <span className="percentage">
-                                      {
-                                        this.populationPercentage(country)
-                                          .populationPercentage
-                                      }
-                                      %
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            ))
-                          : null}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <CountryChart
+                  selected={selected}
+                  selectedCountries={selectedCountries}
+                  scaleCalc={this.scaleCalc}
+                  populationPercentage={this.populationPercentage}
+                />
               </div>
             </div>
           </div>
