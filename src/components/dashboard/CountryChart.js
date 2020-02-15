@@ -14,7 +14,7 @@ export default function CountryChart({
   }
 
   return (
-    <div className="col-12 mt-5 pb-3 country-chart">
+    <div className="col-12 mt-5 pb-md-3 pb-sm-2 pb-1 country-chart">
       <ul className="d-flex justify-content-around p-lg-5 ml-sm-5">
         {selected ? (
           selectedCountries.map(country => (

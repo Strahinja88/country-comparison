@@ -123,6 +123,30 @@
 
 /* Max width 992px */
 @media only screen and (max-width: 992px) {
+  .dashboard h1 {
+    font-size: 35px;
+  }
+
+  .dashboard h4 {
+    font-size: 20px;
+  }
+
+  .info p {
+    font-size: 18px;
+  }
+
+  .country-list {
+    height: 220px;
+  }
+
+  .country-list li {
+    font-size: 18px;
+  }
+
+  .compare-btn {
+    font-size: 18px;
+  }
+
   .country-chart ul {
     padding-top: 10px;
   }
@@ -138,10 +162,15 @@
 
   .chart {
     padding-right: 10px;
+    padding-left: 0;
   }
 
   .scale-wrapper {
     padding: 0;
+  }
+
+  .scale {
+    margin-right: 10px;
   }
 
   .scale ul {
@@ -155,12 +184,24 @@
   .scale ul li span {
     bottom: -8px;
   }
+
+  .percentage {
+    font-size: 14px;
+  }
 }
 
 /* Max width 768px */
 @media only screen and (max-width: 768px) {
+  .dashboard h1 {
+    font-size: 32px;
+  }
+
   .info-wrapper {
     padding-bottom: 30px;
+  }
+
+  .info p {
+    font-size: 16px;
   }
 
   .square {
@@ -173,8 +214,15 @@
     padding-left: 5px;
   }
 
-  .chart {
-    padding-right: 10px;
-    padding-left: 0;
+  .scale ul li {
+    font-size: 12px;
+  }
+
+  .scale ul li span {
+    bottom: -7px;
+  }
+
+  .percentage {
+    font-size: 12px;
   }
 }

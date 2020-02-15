@@ -255,8 +255,8 @@ class Dashboard extends Component {
       <div>
         <div className="dashboard">
           <div className="container">
-            <h1 className="text-center p-5">Country Comparasion</h1>
-            <div className="dashboard-items p-5">
+            <h1 className="text-center p-md-5 p-3">Country Comparasion</h1>
+            <div className="dashboard-items p-md-5 p-3">
               <div className="row">
                 <CountryComparasion
                   selected={selected}
